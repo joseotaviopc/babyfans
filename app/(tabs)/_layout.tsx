@@ -1,53 +1,66 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
-import { Pressable, useColorScheme } from 'react-native';
+import { Pressable, StyleSheet, View, useColorScheme } from 'react-native';
 
-import Colors from '../../constants/Colors';
+import Colors from '@/constants/Colors';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { defaultStyles } from '@/constants/styles';
 
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+export default function Layout() {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-      }}>
+    <Tabs screenOptions={{
+      tabBarActiveTintColor: Colors.pink400,
+      // tabBarInactiveTintColor: Colors.pink400,
+      tabBarActiveBackgroundColor: Colors.dark.background,
+      tabBarInactiveBackgroundColor: Colors.dark.background,
+      tabBarStyle: {
+        borderTopWidth: StyleSheet.hairlineWidth,
+        borderTopColor: Colors.pink400,
+        paddingVertical: 0,
+        backgroundColor: Colors.dark.background,
+      },
+      headerTransparent: true,
+      headerTintColor: Colors.pink400,
+      // headerShown: false,
+      tabBarLabelStyle: {
+        fontFamily: 'mon',
+        fontSize: 12,
+        // paddingVertical: 2,
+      },
+    }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+          tabBarShowLabel: false,
+          tabBarIcon: ({ color, size}) => <Ionicons name="search" color={color} size={size} />
+        }}
+        />
+      <Tabs.Screen
+        name="favorite"
+        options={{
+          tabBarShowLabel: false,
+          tabBarIcon: ({ color, size}) => <Ionicons name="heart-outline" color={color} size={size} />
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="create"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarShowLabel: false,
+          tabBarIcon: ({ color, size}) => <Ionicons name="add-circle-outline" color={color} size={40} />
+        }}
+      />
+      <Tabs.Screen
+        name="inbox"
+        options={{
+          tabBarShowLabel: false,
+          tabBarIcon: ({ color, size}) => <MaterialCommunityIcons name="message-outline" color={color} size={size} />
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          tabBarShowLabel: false,
+          tabBarIcon: ({ color, size}) => <Ionicons name="person-circle-outline" color={color} size={size} />
         }}
       />
     </Tabs>
