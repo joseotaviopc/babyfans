@@ -1,15 +1,18 @@
-import { Link, useRouter } from "expo-router";
 import React from "react"
-import { Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet, Text, View } from "react-native";
+import { BlurView } from 'expo-blur';
 
 export default function Page() {
-  const router = useRouter()
   return (
-    <SafeAreaView>
-      <TouchableOpacity onPress={() => router.back()}>
+    <View style={styles.container}>
       <Text>Back</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 100,
+  }
+})

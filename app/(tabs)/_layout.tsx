@@ -7,27 +7,28 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { defaultStyles } from '@/constants/styles';
 
 export default function Layout() {
+  const tabsScreenOptions = {
+    tabBarActiveTintColor: Colors.pink400,
+    // tabBarInactiveTintColor: Colors.pink400,
+    tabBarActiveBackgroundColor: Colors.dark.background,
+    tabBarInactiveBackgroundColor: Colors.dark.background,
+    tabBarStyle: {
+      borderTopWidth: StyleSheet.hairlineWidth,
+      borderTopColor: Colors.pink400,
+      paddingVertical: 0,
+      backgroundColor: Colors.dark.background,
+    },
+    headerTransparent: true,
+    headerTintColor: Colors.pink400,
+    // headerShown: false,
+    tabBarLabelStyle: {
+      fontFamily: 'mon',
+      fontSize: 12,
+      // paddingVertical: 2,
+    },
+  }
   return (
-    <Tabs screenOptions={{
-      tabBarActiveTintColor: Colors.pink400,
-      // tabBarInactiveTintColor: Colors.pink400,
-      tabBarActiveBackgroundColor: Colors.dark.background,
-      tabBarInactiveBackgroundColor: Colors.dark.background,
-      tabBarStyle: {
-        borderTopWidth: StyleSheet.hairlineWidth,
-        borderTopColor: Colors.pink400,
-        paddingVertical: 0,
-        backgroundColor: Colors.dark.background,
-      },
-      headerTransparent: true,
-      headerTintColor: Colors.pink400,
-      // headerShown: false,
-      tabBarLabelStyle: {
-        fontFamily: 'mon',
-        fontSize: 12,
-        // paddingVertical: 2,
-      },
-    }}>
+    <Tabs screenOptions={tabsScreenOptions}>
       <Tabs.Screen
         name="index"
         options={{
@@ -60,7 +61,8 @@ export default function Layout() {
         name="profile"
         options={{
           tabBarShowLabel: false,
-          tabBarIcon: ({ color, size}) => <Ionicons name="person-circle-outline" color={color} size={size} />
+          tabBarIcon: ({ color, size}) => <Ionicons name="person-circle-outline" color={color} size={size} />,
+          headerShown: false,
         }}
       />
     </Tabs>

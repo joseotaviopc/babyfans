@@ -1,22 +1,30 @@
 import ExploreHeader from "@/components/ExploreHeader";
-import Listing from "@/components/Listing";
+import Listing, { items } from "@/components/Listing";
+import ListingBottomSheet from "@/components/ListingBottomSheet";
+import ListingGray from "@/components/ListingGray";
 import Colors from "@/constants/Colors";
 import { defaultStyles } from "@/constants/styles";
-import { Link, Stack } from "expo-router";
+import { Link, Stack, useNavigation, useRouter } from "expo-router";
 import React, { useState } from "react"
 import { StyleSheet, Text, View } from "react-native";
 
 export default function Page() {
-  const [category, setCategory] = useState(0)
+  const router = useRouter()
+  const navigation = useNavigation()
+
+  const [category, setCategory] = useState('Home')
 
   return (
-    <View style={[defaultStyles.container ,{backgroundColor: Colors.
-    dark.background }]}>
+    <View style={[
+      defaultStyles.container,
+      {backgroundColor: Colors.dark.background }
+    ]}>
       <Stack.Screen options={{
         header: () => <ExploreHeader setCategory={setCategory} />
       }}
       />
-      <Listing category={category}/>
+      <ListingGray category={'Home'}/>
+      <ListingBottomSheet category={category} listings={items} />
     </View>
   )
 }
