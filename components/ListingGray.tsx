@@ -7,6 +7,7 @@ import { Link } from "expo-router"
 import { Ionicons } from "@expo/vector-icons"
 import Animated, { FadeInRight, FadeOutLeft } from "react-native-reanimated"
 import { BottomSheetFlatList, BottomSheetFlatListMethods } from "@gorhom/bottom-sheet"
+import { SafeAreaView } from "react-native-safe-area-context"
 
 interface Props {
   category: string
@@ -31,9 +32,9 @@ export const items = [
   },
 ]
 
-export default function Listing({ category }: Props) {
+export default function ListingGray({ category }: Props) {
   const [loading, setLoading] = useState(false)
-  const listRef = useRef<BottomSheetFlatListMethods>(null)
+  const listRef = useRef<FlatList>(null)
 
   useEffect(() => {
     setLoading(true)
@@ -59,7 +60,7 @@ export default function Listing({ category }: Props) {
     return(
       <Link href={`/listing/${index}`} asChild >
         <TouchableOpacity>
-          <Animated.View style={[styles.itemLink, index === items.length - 1 ? {marginBottom: 48} : {}]} entering={FadeInRight} exiting={FadeOutLeft}>
+          <Animated.View style={styles.itemLink} entering={FadeInRight} exiting={FadeOutLeft}>
             <Image source={item.image} style={styles.image}/>
             <TouchableOpacity style={styles.heart}>
               <Ionicons name="heart-outline" size={24} color={Colors.dark.bodyText} />
@@ -74,34 +75,35 @@ export default function Listing({ category }: Props) {
   }
 
   return(
-    <View style={defaultStyles.container}>
-      <BottomSheetFlatList
+    <SafeAreaView style={[defaultStyles.container, { marginTop: 160, marginBottom: 60, backgroundColor: Colors.dark.background }]}>
+      <FlatList
         ref={listRef}
         style={{
           // borderColor: Colors.pink500, 
           // borderTopWidth: 2, 
           // marginTop: 180,
-          padding: 20,
+          padding: 20
         }}
         showsVerticalScrollIndicator={false}
         data={items}
         key={Math.random().toString(36).slice(2)}
         renderItem={renderRow}
       />
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   itemLink: { 
     // flex: 1, 
-    gap: 16,
-    marginBottom: 32
+    gap: 8,
+    // backgroundColor: "#fff",
+    opacity: 0.5,
   },
   image: { 
-    width: '100%', 
-    height: 400, 
-    borderRadius: 16
+    width: '50%', 
+    height: 200, 
+    borderRadius: 16,
   },
   itemText: {
     fontSize: 24,

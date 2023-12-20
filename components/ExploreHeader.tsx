@@ -2,7 +2,7 @@ import Colors from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import React, { useRef, useState } from "react"
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export const categories = [
@@ -33,24 +33,28 @@ export const categories = [
 ]
 
 interface Props {
-  setCategory: React.Dispatch<React.SetStateAction<number>>
+  setCategory: React.Dispatch<React.SetStateAction<string>>
 }
+const { width } = Dimensions.get('window')
+
 export default function ExploreHeader({ setCategory }: Props) {
   const scrollRef = useRef<ScrollView>(null)
   const itemsRef = useRef<Array<TouchableOpacity | null>>([])
   const [activeIndex, setActiveIndex] = useState(0)
 
-  const selectCategory = (index: number) => {
-    const selected = itemsRef.current[index]
+  function selectCategory(index: number) {
+    // const selected = itemsRef.current[index]
     setActiveIndex(index)
-    setCategory(index)
 
-    selected?.measure((x) => {
-      scrollRef.current?.scrollTo({ x: x - 20, y: 0, animated: true })
-    })
+    // selected?.measure((x) => {
+    //   scrollRef.current?.scrollTo({ x: x - 20, y: 0, animated: true })
+    // })
+
+    setCategory(categories[index].name)
   }
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, zIndex: 10 }}>
       <View style={styles.searchRow}>
         <Link href={'/(modals)/search'} asChild>
           <TouchableOpacity style={styles.searchBtn}>
@@ -70,9 +74,10 @@ export default function ExploreHeader({ setCategory }: Props) {
         contentContainerStyle={{
           alignItems: 'center',
           gap: 32,
-          paddingVertical: 12,
+          // paddingVertical: 12,
           paddingHorizontal: 20,
-          minHeight: 100
+          height: 80,
+          backgroundColor: Colors.dark.background
       }}>
           {categories.map((item, index) => (
             <TouchableOpacity
@@ -101,9 +106,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
     padding: 16,
-    paddingVertical: 24,
+    // paddingVertical: 24,
     backgroundColor: Colors.dark.background,
-    minHeight: 100
+    height: 80
   },
   searchBtn: {
     flex: 1,
